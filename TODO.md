@@ -1,0 +1,3 @@
+- Display some funds
+- Clean stuff up, organize
+- Make it look decent

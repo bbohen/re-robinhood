@@ -4,6 +4,8 @@ type clientOptions = {. "cache": unit, "link": unit};
 
 type linkOptions = {. "uri": string};
 
+[@bs.module "graphql-tag"] external gql : gql = "gql";
+
 [@bs.module "apollo-client-preset"] [@bs.new] external apolloClient : clientOptions => 't =
   "ApolloClient";
 

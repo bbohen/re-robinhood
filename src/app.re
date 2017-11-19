@@ -4,7 +4,6 @@ type load = {. "fundamentals": array(fund)};
 
 type state = {funds: array(fund)};
 
-/* type data = {fundamentals: [ fundamental]}; */
 type action =
   | Load(load);
 
@@ -24,15 +23,17 @@ let client = ApolloClient.apolloClient(apolloClientOptions);
 let fundamentals_query: query =
   gql(
     {|
- query fund {
-   fundamentals(symbols: ["AAPL", "FB"]) {
-     market_cap
-     description
-   }
- }
-|}
+      query fund($symbols: [String]) {
+        fundamentals(symbols: $symbols) {
+          market_cap
+          description
+        }
+      }
+    |}
   );
 
+/* TODO: LEFT OFF HERE getting vars for the query */
+/* let variables =  */
 let make = (_children) => {
   ...component,
   initialState: () => {funds: [||]},
@@ -43,7 +44,9 @@ let make = (_children) => {
       ReasonReact.Update({funds: fundamentals})
     },
   didMount: ({reduce}) => {
-    client##query({"query": fundamentals_query})
+    let variables = {"symbols": ("AAPL", "FB")};
+    let options = {"query": fundamentals_query, "variables": variables};
+    client##query(options)
     |> Js.Promise.then_(
          (response) => {
            let responseData = response##data;

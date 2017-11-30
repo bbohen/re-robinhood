@@ -6,7 +6,7 @@ type linkOptions = {. "uri": string};
 
 [@bs.module "graphql-tag"] external gql : gql = "gql";
 
-[@bs.module "apollo-client-preset"] [@bs.new] external apolloClient : clientOptions => 't =
+[@bs.module "apollo-client-preset"] [@bs.new] external apolloClient : clientOptions => 'a =
   "ApolloClient";
 
 [@bs.module "apollo-client-preset"] [@bs.new] external httpLink : linkOptions => 'a = "HttpLink";

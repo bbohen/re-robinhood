@@ -4,6 +4,8 @@ type data;
 
 type symbol = string;
 
-type fund = {. "description": string, "market_cap": int};
+type fund = {. "description": string};
+
+type possibleFund = Js.Nullable.t({. "description": string});
 
 type gql = string => query;

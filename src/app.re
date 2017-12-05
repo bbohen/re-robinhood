@@ -9,6 +9,7 @@ type state = {
 };
 
 type action =
+  | AddFund(fund)
   | AddSymbol
   | Load(load)
   | UpdateSymbolInput(string);
@@ -54,10 +55,13 @@ let make = (_children) => {
     | Load(data) =>
       let fundamentals = data##fundamentals;
       ReasonReact.Update({...state, funds: fundamentals})
+    | AddFund(fund) =>
+      let newFunds = Array.append(state.funds, [|fund|]);
+      ReasonReact.Update({...state, funds: newFunds})
     | AddSymbol =>
       let symbols = Array.append(state.symbols, [|state.symbolInput|]);
       ReasonReact.UpdateWithSideEffects(
-        {...state, symbols},
+        {...state, symbolInput: "", symbols},
         (
           (self) => {
             let variables = {"symbols": symbols};
@@ -66,8 +70,19 @@ let make = (_children) => {
             |> Js.Promise.then_(
                  (response) => {
                    let responseData = response##data;
-                   let loadAction = (responseData) => Load(responseData);
-                   self.reduce(loadAction, responseData);
+                   let leng = Array.length(responseData##fundamentals);
+                   let fundamentals: array(possibleFund) = responseData##fundamentals;
+                   let newFund = fundamentals[leng - 1];
+                   let nullableFund = Js.Nullable.to_opt(newFund);
+                   switch nullableFund {
+                   | None => Js.log("No matching symbol!")
+                   | Some(name) =>
+                     Js.log("SOME");
+                     let addAction = (thinger) => AddFund(thinger);
+                     let recreatedFund = {"description": name##description};
+                     self.reduce(addAction, recreatedFund);
+                     ()
+                   };
                    Js.Promise.resolve()
                  }
                );
@@ -92,7 +107,7 @@ let make = (_children) => {
     ReasonReact.NoUpdate
   },
   render: ({reduce, state}) => {
-    let fundItems = Array.map((fund) => <Fund description=fund##description />, state.funds);
+    let fundItems = Array.map((fund: fund) => <Fund description=fund##description />, state.funds);
     let symbols = Array.map((symbol) => <Symbol label=symbol />, state.symbols);
     <div>
       <h1> (ReasonReact.stringToElement("Symbols:")) </h1>

@@ -6,9 +6,9 @@
   "main": "index.js",
   "scripts": {
     "build": "bsb -make-world",
-    "bundle": "webpack",
+    "bundle": "parcel build index.html",
     "clean": "bsb -clean-world",
-    "dev": "webpack-dev-server --open",
+    "dev": "parcel index.html",
     "start": "bsb -make-world -w",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,8 +26,6 @@
   },
   "devDependencies": {
     "bs-platform": "^2.1.0",
-    "html-webpack-plugin": "^2.30.1",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "parcel-bundler": "^1.2.0"
   }
 }

@@ -1,13 +1,16 @@
 # General
 .DS_Store
-build
-lib
 
 # NPM
 node_modules
 npm-debug.log
 
 # Reason/OCaml
+lib
 .merlin
 *.bs.js
 .bsb.lock
+
+# Parcel
+.cache
+dist

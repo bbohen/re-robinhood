@@ -14,4 +14,4 @@ type linkOptions = {. "uri": string};
 [@bs.module "apollo-client-preset"] [@bs.new] external inMemoryCache : unit => 'a =
   "InMemoryCache";
 
-[@bs.module "react-apollo"] [@bs.new] external graphql : query => 'a = "graphql";
+[@bs.module "react-apollo"] [@bs.new] external graphql : unit => 'a = "graphql";

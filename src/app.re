@@ -77,7 +77,6 @@ let make = (_children) => {
                    switch nullableFund {
                    | None => Js.log("No matching symbol!")
                    | Some(name) =>
-                     Js.log("SOME");
                      let addAction = (thinger) => AddFund(thinger);
                      let recreatedFund = {"description": name##description};
                      self.reduce(addAction, recreatedFund);
@@ -85,7 +84,8 @@ let make = (_children) => {
                    };
                    Js.Promise.resolve()
                  }
-               );
+               )
+            |> ignore;
             ()
           }
         )
@@ -103,7 +103,8 @@ let make = (_children) => {
            reduce(loadAction, responseData);
            Js.Promise.resolve()
          }
-       );
+       )
+    |> ignore;
     ReasonReact.NoUpdate
   },
   render: ({reduce, state}) => {

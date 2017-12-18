@@ -1,7 +1,13 @@
+# General
 .DS_Store
 build
 lib
+
+# NPM
 node_modules
-.merlin
 npm-debug.log
+
+# Reason/OCaml
+.merlin
 *.bs.js
+.bsb.lock

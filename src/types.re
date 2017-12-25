@@ -2,9 +2,32 @@ type data;
 
 type symbol = string;
 
-type quote = {. "ask_price": string, "symbol": string};
+type quote = {
+  .
+  "ask_price": string,
+  "description": string,
+  "high_52_weeks": string,
+  "low_52_weeks": string,
+  "simple_name": string,
+  "last_trade_price": string,
+  "symbol": string,
+  "updated_at": string
+};
 
-type possibleFund = Js.Nullable.t({. "ask_price": string, "symbol": string});
+type possibleFund =
+  Js.Nullable.t(
+    {
+      .
+      "ask_price": string,
+      "description": string,
+      "high_52_weeks": string,
+      "low_52_weeks": string,
+      "simple_name": string,
+      "last_trade_price": string,
+      "symbol": string,
+      "updated_at": string
+    }
+  );
 
 type gql = string => unit;
 

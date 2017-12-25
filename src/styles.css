@@ -1,4 +1,6 @@
-/* TODO: Remove in favor of styled-components (bs-styled-components if possible)
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
+/* TODO: Remove in favor of styled-components (bs-styled-components/bs-nice?)
 
 /* Minimal Reset */
 html {
@@ -38,6 +40,22 @@ img {
 }
 
 /* App Stuff */
+html {
+  font-family: "Roboto", sans-serif;
+}
+
+input {
+  border: none;
+  border-bottom: 1px solid black;
+  font-size: 16px;
+  padding: 1em;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+}
+
 .app-container {
   display: grid;
   grid-template-columns: auto;
@@ -51,4 +69,29 @@ img {
 .quotes-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+}
+
+.quotes-container > div {
+  border: 1px solid whitesmoke;
+  padding: 20px;
+}
+
+/* Things that should instead be done with autoprefixer */
+
+input::-webkit-input-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+input:-ms-input-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+input:-moz-placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+input::-moz-placeholder {
+  font-family: "Roboto", sans-serif;
 }

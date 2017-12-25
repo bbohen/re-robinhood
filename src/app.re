@@ -14,8 +14,6 @@ type action =
   | Load(load)
   | UpdateSymbolInput(string);
 
-[@bs.module] external gql : gql = "graphql-tag";
-
 let component = ReasonReact.reducerComponent("App");
 
 let httpLinkOptions: ApolloClient.linkOptions = {"uri": "http://localhost:8080/graphql"};
@@ -27,13 +25,17 @@ let apolloClientOptions: ApolloClient.clientOptions = {
 
 let client = ApolloClient.apolloClient(apolloClientOptions);
 
-let fundamentals_query =
+let quotes_query =
   gql(
     {|
       query quote($symbols: [String]) {
         quotes(symbols: $symbols) {
           ask_price
+          high_52_weeks
+          low_52_weeks
+          simple_name
           symbol
+          updated_at
         }
       }
     |}
@@ -65,7 +67,7 @@ let make = (_children) => {
         (
           (self) => {
             let variables = {"symbols": symbols};
-            let options = {"query": fundamentals_query, "variables": variables};
+            let options = {"query": quotes_query, "variables": variables};
             client##query(options)
             |> Js.Promise.then_(
                  (response) => {
@@ -76,10 +78,19 @@ let make = (_children) => {
                    let nullableFund = Js.Nullable.to_opt(newFund);
                    switch nullableFund {
                    | None => Js.log("No matching symbol!")
-                   | Some(name) =>
-                     let addAction = (thinger) => AddFund(thinger);
-                     let recreatedFund = {"ask_price": name##ask_price, "symbol": name##symbol};
-                     self.reduce(addAction, recreatedFund);
+                   | Some(quote) =>
+                     let addAction = (value) => AddFund(value);
+                     let quoteToAdd = {
+                       "ask_price": quote##ask_price,
+                       "description": quote##description,
+                       "high_52_weeks": quote##high_52_weeks,
+                       "low_52_weeks": quote##low_52_weeks,
+                       "last_trade_price": quote##last_trade_price,
+                       "simple_name": quote##simple_name,
+                       "symbol": quote##symbol,
+                       "updated_at": quote##updated_at
+                     };
+                     self.reduce(addAction, quoteToAdd);
                      ()
                    };
                    Js.Promise.resolve()
@@ -94,7 +105,7 @@ let make = (_children) => {
     },
   didMount: ({reduce, state}) => {
     let variables = {"symbols": state.symbols};
-    let options = {"query": fundamentals_query, "variables": variables};
+    let options = {"query": quotes_query, "variables": variables};
     client##query(options)
     |> Js.Promise.then_(
          (response) => {
@@ -110,9 +121,12 @@ let make = (_children) => {
   render: ({reduce, state}) =>
     <div className="app-container">
       <div className="symbols-container">
-        <Symbols symbols=state.symbols />
         <form onSubmit=(reduce(addSymbol))>
-          <input onChange=(reduce(updateSymbolInput)) value=state.symbolInput />
+          <input
+            placeholder="Enter a stock symbol"
+            onChange=(reduce(updateSymbolInput))
+            value=state.symbolInput
+          />
         </form>
       </div>
       <Quotes quotes=state.quotes />

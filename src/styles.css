@@ -2,7 +2,9 @@
 
 /* TODO: Remove in favor of styled-components (bs-styled-components/bs-nice?)
 
-/* Minimal Reset */
+/*
+  Minimal Reset
+*/
 html {
   box-sizing: border-box;
   font-size: 16px;
@@ -39,10 +41,13 @@ img {
   height: auto;
 }
 
-/* App Stuff */
+/*
+  App Stuff
+*/
 
 :root {
-  --money-color: #85bb65;
+  --happy-color: #85bb65;
+  --sad-color: #c81d11;
 }
 
 html {
@@ -51,7 +56,7 @@ html {
 
 input {
   border: none;
-  border-bottom: 1px solid var(--money-color);
+  border-bottom: 1px solid var(--happy-color);
   font-size: 16px;
   padding: 1em;
   width: 100%;
@@ -81,11 +86,25 @@ input:focus {
 .quotes-container > div {
   animation-duration: 1s;
   animation-name: fadein;
-  border: 1px solid whitesmoke;
   padding: 20px;
 }
 
-/* Animations */
+.quotes-container > div.positive {
+  border: 1px solid var(--happy-color);
+}
+
+.quotes-container > div.negative {
+  border: 1px solid var(--sad-color);
+}
+
+.quotes-container .quote-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/*
+  Animations
+*/
 
 @keyframes fadein {
   0% {
@@ -96,7 +115,9 @@ input:focus {
   }
 }
 
-/* Things that should instead be done with autoprefixer (or bs-nice, etc) */
+/*
+  Things that should instead be done with autoprefixer (or bs-nice, etc)
+*/
 
 input::-webkit-input-placeholder {
   font-family: "Roboto", sans-serif;

@@ -31,10 +31,12 @@ let quotes_query =
       query quote($symbols: [String]) {
         quotes(symbols: $symbols) {
           ask_price
+          last_trade_price
           high_52_weeks
           low_52_weeks
           simple_name
           symbol
+          trade_price_delta
           updated_at
         }
       }
@@ -88,6 +90,7 @@ let make = (_children) => {
                        "last_trade_price": quote##last_trade_price,
                        "simple_name": quote##simple_name,
                        "symbol": quote##symbol,
+                       "trade_price_delta": quote##trade_price_delta,
                        "updated_at": quote##updated_at
                      };
                      self.reduce(addAction, quoteToAdd);

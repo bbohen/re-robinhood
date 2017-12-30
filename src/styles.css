@@ -40,13 +40,18 @@ img {
 }
 
 /* App Stuff */
+
+:root {
+  --money-color: #85bb65;
+}
+
 html {
   font-family: "Roboto", sans-serif;
 }
 
 input {
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--money-color);
   font-size: 16px;
   padding: 1em;
   width: 100%;
@@ -74,11 +79,24 @@ input:focus {
 }
 
 .quotes-container > div {
+  animation-duration: 1s;
+  animation-name: fadein;
   border: 1px solid whitesmoke;
   padding: 20px;
 }
 
-/* Things that should instead be done with autoprefixer */
+/* Animations */
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+/* Things that should instead be done with autoprefixer (or bs-nice, etc) */
 
 input::-webkit-input-placeholder {
   font-family: "Roboto", sans-serif;

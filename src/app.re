@@ -37,6 +37,7 @@ let quotes_query =
           simple_name
           symbol
           trade_price_delta
+          trade_price_delta_percentage
           updated_at
         }
       }
@@ -91,6 +92,7 @@ let make = (_children) => {
                        "simple_name": quote##simple_name,
                        "symbol": quote##symbol,
                        "trade_price_delta": quote##trade_price_delta,
+                       "trade_price_delta_percentage": quote##trade_price_delta_percentage,
                        "updated_at": quote##updated_at
                      };
                      self.reduce(addAction, quoteToAdd);

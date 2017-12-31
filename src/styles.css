@@ -86,20 +86,21 @@ input:focus {
 .quotes-container > div {
   animation-duration: 1s;
   animation-name: fadein;
+  border: 1px solid whitesmoke;
   padding: 20px;
-}
-
-.quotes-container > div.positive {
-  border: 1px solid var(--happy-color);
-}
-
-.quotes-container > div.negative {
-  border: 1px solid var(--sad-color);
 }
 
 .quotes-container .quote-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+div.positive .trade_price_delta {
+  color: var(--happy-color);
+}
+
+div.negative .trade_price_delta {
+  color: var(--sad-color);
 }
 
 /*

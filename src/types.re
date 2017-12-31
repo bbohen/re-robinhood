@@ -12,6 +12,7 @@ type quote = {
   "last_trade_price": string,
   "symbol": string,
   "trade_price_delta": int,
+  "trade_price_delta_percentage": string,
   "updated_at": string
 };
 
@@ -27,6 +28,7 @@ type possibleFund =
       "last_trade_price": string,
       "symbol": string,
       "trade_price_delta": int,
+      "trade_price_delta_percentage": string,
       "updated_at": string
     }
   );

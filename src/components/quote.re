@@ -7,6 +7,12 @@ let make = (~quote, _children) => {
   render: (self) => {
     let stockHadPositiveDelta = quote##trade_price_delta > 0;
     let quoteCssClass = stockHadPositiveDelta ? "positive" : "negative";
+    let formattedDelta =
+      " ("
+      ++ string_of_int(quote##trade_price_delta)
+      ++ " / "
+      ++ quote##trade_price_delta_percentage
+      ++ ")";
     <div className=quoteCssClass onClick=(self.handle(handleClick))>
       <div className="quote-header">
         <span>
@@ -15,7 +21,9 @@ let make = (~quote, _children) => {
         </span>
         <span>
           (ReasonReact.stringToElement(quote##last_trade_price))
-          (ReasonReact.stringToElement(" (" ++ string_of_int(quote##trade_price_delta) ++ ")"))
+          <span className="trade_price_delta">
+            (ReasonReact.stringToElement(formattedDelta))
+          </span>
         </span>
       </div>
       <div>

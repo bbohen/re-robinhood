@@ -16,7 +16,7 @@ type quote = {
   "updated_at": string
 };
 
-type possibleFund =
+type possibleQuote =
   Js.Nullable.t(
     {
       .

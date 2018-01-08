@@ -1,5 +1,7 @@
 open Types;
 
+open Utils;
+
 type load = {. "quotes": array(quote)};
 
 type state = {
@@ -9,7 +11,7 @@ type state = {
 };
 
 type action =
-  | AddFund(quote)
+  | AddQuote(quote)
   | AddSymbol
   | Load(load)
   | UpdateSymbolInput(string);
@@ -25,25 +27,6 @@ let apolloClientOptions: ApolloClient.clientOptions = {
 
 let client = ApolloClient.apolloClient(apolloClientOptions);
 
-let quotes_query =
-  gql(
-    {|
-      query quote($symbols: [String]) {
-        quotes(symbols: $symbols) {
-          ask_price
-          last_trade_price
-          high_52_weeks
-          low_52_weeks
-          simple_name
-          symbol
-          trade_price_delta
-          trade_price_delta_percentage
-          updated_at
-        }
-      }
-    |}
-  );
-
 let addSymbol = (event) => {
   ReactEventRe.Form.preventDefault(event);
   AddSymbol
@@ -54,35 +37,44 @@ let updateSymbolInput = (event) =>
 
 let make = (_children) => {
   ...component,
-  initialState: () => {quotes: [||], symbols: [|"AAPL", "FB"|], symbolInput: ""},
+  initialState: () => {
+    let symbols: array(string) =
+      switch Dom.Storage.(localStorage |> getItem(namespace)) {
+      | None => [||]
+      | Some(stringifiedJson) => parseJson(stringifiedJson)
+      };
+    {quotes: [||], symbols, symbolInput: ""}
+  },
   reducer: (action, state) =>
     switch action {
     | Load(data) =>
-      let fundamentals = data##quotes;
-      ReasonReact.Update({...state, quotes: fundamentals})
-    | AddFund(quote) =>
-      let newQuotes = Array.append(state.quotes, [|quote|]);
-      ReasonReact.Update({...state, quotes: newQuotes})
+      let quotes = data##quotes;
+      ReasonReact.Update({...state, quotes})
+    | AddQuote(quote) =>
+      let quotes = Array.append(state.quotes, [|quote|]);
+      let symbols = Array.append(state.symbols, [|state.symbolInput|]);
+      saveLocally(symbols);
+      ReasonReact.Update({quotes, symbols, symbolInput: ""})
     | AddSymbol =>
       let symbols = Array.append(state.symbols, [|state.symbolInput|]);
       ReasonReact.UpdateWithSideEffects(
-        {...state, symbolInput: "", symbols},
+        state,
         (
           (self) => {
             let variables = {"symbols": symbols};
-            let options = {"query": quotes_query, "variables": variables};
+            let options = {"query": Queries.quotes, "variables": variables};
             client##query(options)
             |> Js.Promise.then_(
                  (response) => {
                    let responseData = response##data;
                    let leng = Array.length(responseData##quotes);
-                   let fundamentals: array(possibleFund) = responseData##quotes;
-                   let newFund = fundamentals[leng - 1];
-                   let nullableFund = Js.Nullable.to_opt(newFund);
-                   switch nullableFund {
+                   let quotes: array(possibleQuote) = responseData##quotes;
+                   let newQuote = quotes[leng - 1];
+                   let nullableQuote = Js.Nullable.to_opt(newQuote);
+                   switch nullableQuote {
                    | None => Js.log("No matching symbol!")
                    | Some(quote) =>
-                     let addAction = (value) => AddFund(value);
+                     let addQuoteAction = (value) => AddQuote(value);
                      let quoteToAdd = {
                        "ask_price": quote##ask_price,
                        "description": quote##description,
@@ -95,7 +87,7 @@ let make = (_children) => {
                        "trade_price_delta_percentage": quote##trade_price_delta_percentage,
                        "updated_at": quote##updated_at
                      };
-                     self.reduce(addAction, quoteToAdd);
+                     self.reduce(addQuoteAction, quoteToAdd);
                      ()
                    };
                    Js.Promise.resolve()
@@ -109,18 +101,20 @@ let make = (_children) => {
     | UpdateSymbolInput(value) => ReasonReact.Update({...state, symbolInput: value})
     },
   didMount: ({reduce, state}) => {
-    let variables = {"symbols": state.symbols};
-    let options = {"query": quotes_query, "variables": variables};
-    client##query(options)
-    |> Js.Promise.then_(
-         (response) => {
-           let responseData = response##data;
-           let loadAction = (responseData) => Load(responseData);
-           reduce(loadAction, responseData);
-           Js.Promise.resolve()
-         }
-       )
-    |> ignore;
+    if (Array.length(state.symbols) > 0) {
+      let variables = {"symbols": state.symbols};
+      let options = {"query": Queries.quotes, "variables": variables};
+      client##query(options)
+      |> Js.Promise.then_(
+           (response) => {
+             let responseData = response##data;
+             let loadAction = (responseData) => Load(responseData);
+             reduce(loadAction, responseData);
+             Js.Promise.resolve()
+           }
+         )
+      |> ignore
+    };
     ReasonReact.NoUpdate
   },
   render: ({reduce, state}) =>

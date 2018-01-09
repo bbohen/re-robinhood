@@ -9,7 +9,6 @@ let make = (~quotes, _children) => {
     let quoteItems =
       Array.map(
         (quote) => {
-          Js.log(quotes);
           let key = quote##symbol ++ "index";
           index + 1;
           <Quote key quote />

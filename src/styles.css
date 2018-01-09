@@ -59,6 +59,7 @@ input {
   border-bottom: 1px solid var(--happy-color);
   font-size: 16px;
   padding: 1em;
+  text-transform: uppercase;
   width: 100%;
 }
 
@@ -78,7 +79,7 @@ input:focus {
 
 .quotes-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fill, 20em);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -95,11 +96,21 @@ input:focus {
   grid-template-columns: 1fr 1fr;
 }
 
-div.positive .trade_price_delta {
+.quote-symbol,
+.quote-last-trade-price {
+  font-size: 1.5em;
+}
+
+.quote-last-trade-price,
+.quote-formatted-delta {
+  text-align: right;
+}
+
+div.positive .trend-color {
   color: var(--happy-color);
 }
 
-div.negative .trade_price_delta {
+div.negative .trend-color {
   color: var(--sad-color);
 }
 
@@ -122,16 +133,20 @@ div.negative .trade_price_delta {
 
 input::-webkit-input-placeholder {
   font-family: "Roboto", sans-serif;
+  text-transform: none;
 }
 
 input:-ms-input-placeholder {
   font-family: "Roboto", sans-serif;
+  text-transform: none;
 }
 
 input:-moz-placeholder {
   font-family: "Roboto", sans-serif;
+  text-transform: none;
 }
 
 input::-moz-placeholder {
   font-family: "Roboto", sans-serif;
+  text-transform: none;
 }

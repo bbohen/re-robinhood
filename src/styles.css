@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+@import url("https://fonts.googleapis.com/css?family=VT323");
 
 /* TODO: Remove in favor of styled-components (bs-styled-components/bs-nice?)
 
@@ -45,19 +45,37 @@ img {
   App Stuff
 */
 
-:root {
+:root .light-theme {
+  --background-color: white;
+  --border-color: black;
+  --foreground-color: black;
   --happy-color: #85bb65;
   --sad-color: #c81d11;
+  --subtext-color: black;
 }
 
-html {
-  font-family: "Roboto", sans-serif;
+:root .dark-theme {
+  --background-color: #282a36;
+  --border-color: #44475a;
+  --foreground-color: #f8f8f2;
+  --happy-color: #50fa7b;
+  --sad-color: #ffb86c;
+  --subtext-color: #6272a4;
+}
+
+html,
+body {
+  font-family: "VT323", monospace;
+  height: 100%;
 }
 
 input {
+  background-color: var(--background-color);
+  color: var(--foreground-color);
   border: none;
   border-bottom: 1px solid var(--happy-color);
-  font-size: 16px;
+  font-family: "VT323", monospace;
+  font-size: 1.5em;
   padding: 1em;
   text-transform: uppercase;
   width: 100%;
@@ -67,9 +85,29 @@ input:focus {
   outline: none;
 }
 
+#index {
+  height: 100%;
+}
+
 .app-container {
   display: grid;
+  grid-template-rows: 1fr 2fr 26fr;
+  height: 100%;
+  background: var(--background-color);
+  color: var(--foreground-color);
   grid-template-columns: auto;
+  overflow: scroll;
+}
+
+.app-header {
+  font-size: 1.5em;
+  padding: 20px 20px 0 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#app-title {
+  color: var(--happy-color);
 }
 
 .symbols-container,
@@ -79,7 +117,8 @@ input:focus {
 
 .quotes-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 20em);
+  grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+  /* grid-auto-columns: auto; */
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -87,13 +126,24 @@ input:focus {
 .quotes-container > div {
   animation-duration: 1s;
   animation-name: fadein;
-  border: 1px solid whitesmoke;
+  border: 1px solid var(--border-color);
+  font-size: 1.5em;
   padding: 20px;
 }
 
 .quotes-container .quote-header {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+}
+
+.quotes-container .quote-body {
+  color: var(--subtext-color);
+}
+
+.quotes-container .quote-body div {
+  display: flex;
+  justify-content: space-between;
 }
 
 .quote-symbol,
@@ -132,21 +182,49 @@ div.negative .trend-color {
 */
 
 input::-webkit-input-placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: "VT323", monospace;
   text-transform: none;
 }
 
 input:-ms-input-placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: "VT323", monospace;
   text-transform: none;
 }
 
 input:-moz-placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: "VT323", monospace;
   text-transform: none;
 }
 
 input::-moz-placeholder {
-  font-family: "Roboto", sans-serif;
+  font-family: "VT323", monospace;
   text-transform: none;
+}
+
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  color: var(--foreground-color);
+}
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: var(--foreground-color);
+  opacity: 1;
+}
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: var(--foreground-color);
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--foreground-color);
+}
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--foreground-color);
+}
+
+::placeholder {
+  /* Most modern browsers support this now. */
+  color: var(--foreground-color);
 }

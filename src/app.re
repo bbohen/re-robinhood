@@ -5,6 +5,7 @@ open Utils;
 type load = {. "quotes": array(quote)};
 
 type state = {
+  darkTheme: bool,
   quotes: array(quote),
   symbols: array(symbol),
   symbolInput: string
@@ -14,6 +15,7 @@ type action =
   | AddQuote(quote)
   | AddSymbol
   | Load(load)
+  | ToggleTheme
   | UpdateSymbolInput(string);
 
 let component = ReasonReact.reducerComponent("App");
@@ -32,6 +34,8 @@ let addSymbol = (event) => {
   AddSymbol
 };
 
+let toggleTheme = (event) => ToggleTheme;
+
 let updateSymbolInput = (event) =>
   UpdateSymbolInput(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
 
@@ -43,7 +47,7 @@ let make = (_children) => {
       | None => [||]
       | Some(stringifiedJson) => parseJson(stringifiedJson)
       };
-    {quotes: [||], symbols, symbolInput: ""}
+    {darkTheme: true, quotes: [||], symbols, symbolInput: ""}
   },
   reducer: (action, state) =>
     switch action {
@@ -54,7 +58,7 @@ let make = (_children) => {
       let quotes = Array.append(state.quotes, [|quote|]);
       let symbols = Array.append(state.symbols, [|state.symbolInput|]);
       saveLocally(symbols);
-      ReasonReact.Update({quotes, symbols, symbolInput: ""})
+      ReasonReact.Update({...state, quotes, symbols, symbolInput: ""})
     | AddSymbol =>
       let symbols = Array.append(state.symbols, [|state.symbolInput|]);
       ReasonReact.UpdateWithSideEffects(
@@ -98,6 +102,7 @@ let make = (_children) => {
           }
         )
       )
+    | ToggleTheme => ReasonReact.Update({...state, darkTheme: ! state.darkTheme})
     | UpdateSymbolInput(value) => ReasonReact.Update({...state, symbolInput: value})
     },
   didMount: ({reduce, state}) => {
@@ -117,8 +122,17 @@ let make = (_children) => {
     };
     ReasonReact.NoUpdate
   },
-  render: ({reduce, state}) =>
-    <div className="app-container">
+  render: ({reduce, state}) => {
+    let themeClassName = state.darkTheme ? "dark-theme" : "light-theme";
+    let appClassName = "app-container " ++ themeClassName;
+    <div className=appClassName>
+      <div className="app-header">
+        <span id="app-title"> (ReasonReact.stringToElement("reason-react-robinhood")) </span>
+        <span>
+          <span onClick=(reduce(toggleTheme))> (ReasonReact.stringToElement("Light / ")) </span>
+          <span onClick=(reduce(toggleTheme))> (ReasonReact.stringToElement("Dark")) </span>
+        </span>
+      </div>
       <div className="symbols-container">
         <form onSubmit=(reduce(addSymbol))>
           <input
@@ -130,4 +144,5 @@ let make = (_children) => {
       </div>
       <Quotes quotes=state.quotes />
     </div>
+  }
 };

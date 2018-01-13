@@ -34,7 +34,7 @@ let addSymbol = (event) => {
   AddSymbol
 };
 
-let toggleTheme = (event) => ToggleTheme;
+let toggleTheme = (_event) => ToggleTheme;
 
 let updateSymbolInput = (event) =>
   UpdateSymbolInput(ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value);
@@ -126,13 +126,7 @@ let make = (_children) => {
     let themeClassName = state.darkTheme ? "dark-theme" : "light-theme";
     let appClassName = "app-container " ++ themeClassName;
     <div className=appClassName>
-      <div className="app-header">
-        <span id="app-title"> (ReasonReact.stringToElement("reason-react-robinhood")) </span>
-        <span>
-          <span onClick=(reduce(toggleTheme))> (ReasonReact.stringToElement("Light / ")) </span>
-          <span onClick=(reduce(toggleTheme))> (ReasonReact.stringToElement("Dark")) </span>
-        </span>
-      </div>
+      <AppHeader isDarkTheme=state.darkTheme onThemeToggle=(reduce(toggleTheme)) />
       <div className="symbols-container">
         <form onSubmit=(reduce(addSymbol))>
           <input

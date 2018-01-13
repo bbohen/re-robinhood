@@ -47,11 +47,11 @@ img {
 
 :root .light-theme {
   --background-color: white;
-  --border-color: black;
-  --foreground-color: black;
+  --border-color: #ecf0f1;
+  --foreground-color: #141823;
   --happy-color: #85bb65;
   --sad-color: #c81d11;
-  --subtext-color: black;
+  --subtext-color: #95a5a6;
 }
 
 :root .dark-theme {
@@ -124,7 +124,7 @@ input:focus {
 }
 
 .quotes-container > div {
-  animation-duration: 1s;
+  animation-duration: 0.7s;
   animation-name: fadein;
   border: 1px solid var(--border-color);
   font-size: 1.5em;
@@ -227,4 +227,20 @@ input::-moz-placeholder {
 ::placeholder {
   /* Most modern browsers support this now. */
   color: var(--foreground-color);
+}
+
+.no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+div.app-container,
+input {
+  -webkit-transition: background 0.1s linear;
+  -ms-transition: background 0.1s linear;
+  transition: background 0.1s linear;
 }

@@ -1,10 +1,8 @@
 let component = ReasonReact.statelessComponent("Quote");
 
-let handleClick = (_event, _self) => Js.log("clicked!");
-
-let make = (~quote, _children) => {
+let make = (~quote, ~onRemoveClick, _children) => {
   ...component,
-  render: (self) => {
+  render: (_self) => {
     let stockHadPositiveDelta = quote##trade_price_delta > 0;
     let quoteCssClass = stockHadPositiveDelta ? "positive" : "negative";
     let formattedDelta =
@@ -12,7 +10,7 @@ let make = (~quote, _children) => {
       ++ string_of_int(quote##trade_price_delta)
       ++ " / "
       ++ quote##trade_price_delta_percentage;
-    <div className=quoteCssClass onClick=(self.handle(handleClick))>
+    <div className=quoteCssClass>
       <div className="quote-header">
         <div>
           <div className="quote-symbol"> (ReasonReact.stringToElement(quote##symbol)) </div>
@@ -44,6 +42,9 @@ let make = (~quote, _children) => {
           <span> (ReasonReact.stringToElement("Last Updated: ")) </span>
           <span> (ReasonReact.stringToElement(quote##updated_at)) </span>
         </div>
+      </div>
+      <div onClick=onRemoveClick className="quote-footer">
+        (ReasonReact.stringToElement("Remove"))
       </div>
     </div>
   }

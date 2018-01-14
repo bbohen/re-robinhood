@@ -1,6 +1,5 @@
 ###Random todos once basic app complete
 
-* Ability to remove quote
 * Use RH search instead of / with direct symbol input?
 * Flip/expand/transform card for more info?
 * Use bs-apollo instead of custom bindings

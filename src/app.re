@@ -56,12 +56,15 @@ let make = (_children) => {
       ReasonReact.Update({...state, quotes})
     | AddQuote(quote) =>
       let quotes = Array.append(state.quotes, [|quote|]);
-      let symbols = Array.append(state.symbols, [|state.symbolInput|]);
+      let capitalizedSymbol = String.uppercase(state.symbolInput);
+      let symbols = Array.append(state.symbols, [|capitalizedSymbol|]);
+      Js.log(symbols);
       saveLocally(symbols);
       ReasonReact.Update({...state, quotes, symbols, symbolInput: ""})
     | AddSymbol =>
       let capitalizedSymbol = String.uppercase(state.symbolInput);
       let symbols = Array.append(state.symbols, [|capitalizedSymbol|]);
+      Js.log(symbols);
       ReasonReact.UpdateWithSideEffects(
         state,
         (

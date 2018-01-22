@@ -55,7 +55,7 @@ let appReducer = (action, state) =>
                      "symbol": quote##symbol,
                      "trade_price_delta": quote##trade_price_delta,
                      "trade_price_delta_percentage": quote##trade_price_delta_percentage,
-                     "updated_at": quote##updated_at
+                     "hours_since_update": quote##hours_since_update
                    };
                    self.reduce(addQuote, quoteToAdd);
                    ()

@@ -13,7 +13,7 @@ type quote = {
   "symbol": string,
   "trade_price_delta": int,
   "trade_price_delta_percentage": string,
-  "updated_at": string
+  "hours_since_update": string
 };
 
 type payload = {. "quotes": array(quote)};
@@ -31,7 +31,7 @@ type possibleQuote =
       "symbol": string,
       "trade_price_delta": int,
       "trade_price_delta_percentage": string,
-      "updated_at": string
+      "hours_since_update": string
     }
   );
 

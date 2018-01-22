@@ -40,7 +40,7 @@ let make = (~quote, ~onRemoveClick, _children) => {
         </div>
         <div>
           <span> (ReasonReact.stringToElement("Last Updated: ")) </span>
-          <span> (ReasonReact.stringToElement(quote##updated_at)) </span>
+          <span> (ReasonReact.stringToElement(quote##hours_since_update ++ " hours ago")) </span>
         </div>
       </div>
       <div onClick=onRemoveClick className="quote-footer">

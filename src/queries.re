@@ -13,7 +13,7 @@ let quotes =
           symbol
           trade_price_delta
           trade_price_delta_percentage
-          updated_at
+          hours_since_update
         }
       }
     |}

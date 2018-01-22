@@ -57,7 +57,7 @@ let appReducer = (action, state) =>
                      "trade_price_delta_percentage": quote##trade_price_delta_percentage,
                      "updated_at": quote##updated_at
                    };
-                   self.reduce(addQuoteAction, quoteToAdd);
+                   self.reduce(addQuote, quoteToAdd);
                    ()
                  };
                  Js.Promise.resolve()

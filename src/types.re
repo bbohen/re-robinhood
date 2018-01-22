@@ -16,7 +16,7 @@ type quote = {
   "updated_at": string
 };
 
-type load = {. "quotes": array(quote)};
+type payload = {. "quotes": array(quote)};
 
 type possibleQuote =
   Js.Nullable.t(

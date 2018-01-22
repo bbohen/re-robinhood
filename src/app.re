@@ -1,3 +1,5 @@
+open Actions;
+
 open Reducer;
 
 open Utils;
@@ -23,7 +25,7 @@ let make = (_children) => {
       |> Js.Promise.then_(
            (response) => {
              let responseData = response##data;
-             reduce(Actions.loadAction, responseData);
+             reduce(load, responseData);
              Js.Promise.resolve()
            }
          )
@@ -35,17 +37,17 @@ let make = (_children) => {
     let themeClassName = state.darkTheme ? "dark-theme" : "light-theme";
     let appClassName = "app-container " ++ themeClassName;
     <div className=appClassName>
-      <AppHeader isDarkTheme=state.darkTheme onThemeToggle=(reduce(Actions.toggleTheme)) />
+      <AppHeader isDarkTheme=state.darkTheme onThemeToggle=(reduce(toggleTheme)) />
       <div className="symbols-container">
-        <form onSubmit=(reduce(Actions.addSymbol))>
+        <form onSubmit=(reduce(addSymbol))>
           <input
             placeholder="Enter a stock symbol"
-            onChange=(reduce(Actions.updateSymbolInput))
+            onChange=(reduce(updateSymbolInput))
             value=state.symbolInput
           />
         </form>
       </div>
-      <Quotes removeQuote=(reduce(Actions.removeQuote)) quotes=state.quotes />
+      <Quotes removeQuote=(reduce(removeQuote)) quotes=state.quotes />
     </div>
   }
 };

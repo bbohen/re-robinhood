@@ -3,9 +3,9 @@ open Types;
 type t =
   | AddSymbol
   | AddSymbolSuccess(quote)
-  | LoadInitialQuotesSuccess(load)
+  | LoadInitialQuotesSuccess(payload)
   | RemoveSymbol(string)
-  | RemoveSymbolSuccess(array(string), load)
+  | RemoveSymbolSuccess(array(string), payload)
   | ToggleTheme
   | UpdateSymbolInput(string);
 
@@ -14,9 +14,9 @@ let addSymbol = (event) => {
   AddSymbol
 };
 
-let addQuoteAction = (value) => AddSymbolSuccess(value);
+let addQuote = (value) => AddSymbolSuccess(value);
 
-let loadAction = (responseData) => LoadInitialQuotesSuccess(responseData);
+let load = (responseData) => LoadInitialQuotesSuccess(responseData);
 
 let removeQuote = (symbol) => RemoveSymbol(symbol);
 

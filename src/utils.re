@@ -1,6 +1,6 @@
 open Json;
 
-let namespace = "reason-react-robinhood";
+let namespace = "re-robinhood";
 
 let parseJson = (stringifiedJson) => Json.parseOrRaise(stringifiedJson) |> Decode.(array(string));
 

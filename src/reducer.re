@@ -41,7 +41,9 @@ let appReducer = (action, state) =>
                  let leng = Array.length(responseData##quotes);
                  let quotes: array(possibleQuote) = responseData##quotes;
                  let newQuote = quotes[leng - 1];
-                 let nullableQuote = Js.Nullable.to_opt(newQuote);
+                 let symbolsList = Array.to_list(state.symbols);
+                 let isDupe = List.exists((element) => element == capitalizedSymbol, symbolsList);
+                 let nullableQuote = isDupe ? None : Js.Nullable.to_opt(newQuote);
                  switch nullableQuote {
                  | None => Js.log("No matching symbol!")
                  | Some(quote) =>

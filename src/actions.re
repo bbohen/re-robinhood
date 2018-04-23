@@ -1,8 +1,12 @@
 open Types;
 
+type graphPayload = {. "symbol": string, "index": int};
+
 type t =
   | AddSymbol
   | AddSymbolSuccess(quote)
+  | LoadHistoricalDataForQuote(graphPayload)
+  | LoadHistoricalDataForQuoteSuccess(quote, int)
   | LoadInitialQuotesSuccess(payload)
   | RemoveSymbol(string)
   | RemoveSymbolSuccess(array(string), payload)
@@ -17,6 +21,8 @@ let addSymbol = (event) => {
 let addQuote = (value) => AddSymbolSuccess(value);
 
 let load = (responseData) => LoadInitialQuotesSuccess(responseData);
+
+let loadHistoricalData = (graphPayload) => LoadHistoricalDataForQuote(graphPayload);
 
 let removeQuote = (symbol) => RemoveSymbol(symbol);
 

@@ -1,7 +1,11 @@
 let component = ReasonReact.statelessComponent("Quote");
 
-let make = (~quote, ~onRemoveClick, _children) => {
+let make = (~quote, ~loadGraphData, ~onRemoveClick, _children) => {
   ...component,
+  didMount: (_self) => {
+    loadGraphData();
+    ReasonReact.NoUpdate
+  },
   render: (_self) => {
     let stockHadPositiveDelta = quote##trade_price_delta > 0;
     let quoteCssClass = stockHadPositiveDelta ? "positive" : "negative";
@@ -24,6 +28,9 @@ let make = (~quote, ~onRemoveClick, _children) => {
             (ReasonReact.stringToElement(formattedDelta))
           </div>
         </div>
+      </div>
+      <div className="quote-chart">
+        <PixelChart chartId=quote##symbol values=quote##historical_data />
       </div>
       <div className="quote-body">
         <div>

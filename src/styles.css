@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=VT323");
+@import url('https://fonts.googleapis.com/css?family=VT323');
 
 /* TODO: Remove in favor of styled-components (bs-styled-components/bs-nice?)
 
@@ -69,7 +69,7 @@ img {
 
 html,
 body {
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   height: 100%;
 }
 
@@ -78,7 +78,7 @@ input {
   color: var(--foreground-color);
   border: none;
   border-bottom: 4px solid var(--happy-color);
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   font-size: 1.5em;
   padding: 1em;
   text-transform: uppercase;
@@ -132,7 +132,7 @@ input:focus {
   border: 4px solid var(--border-color);
   font-size: 1.5em;
   display: grid;
-  grid-auto-rows: auto 1fr 20%;
+  grid-auto-rows: auto 1fr 15%;
 }
 
 .quotes-container .quote-header {
@@ -145,6 +145,7 @@ input:focus {
 .quotes-container .quote-body {
   color: var(--subtext-color);
   padding: 0 20px;
+  margin-bottom: 20px;
 }
 
 .quotes-container .quote-body div {
@@ -174,10 +175,12 @@ input:focus {
 
 div.positive {
   background-color: var(--happy-background-color);
+  fill: var(--happy-color);
 }
 
 div.negative {
   background-color: var(--sad-background-color);
+  fill: var(--sad-color);
 }
 
 div.positive .trend-color {
@@ -186,6 +189,10 @@ div.positive .trend-color {
 
 div.negative .trend-color {
   color: var(--sad-color);
+}
+
+.pixel-chart svg {
+  width: 100%;
 }
 
 /*
@@ -206,22 +213,22 @@ div.negative .trend-color {
 */
 
 input::-webkit-input-placeholder {
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   text-transform: none;
 }
 
 input:-ms-input-placeholder {
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   text-transform: none;
 }
 
 input:-moz-placeholder {
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   text-transform: none;
 }
 
 input::-moz-placeholder {
-  font-family: "VT323", monospace;
+  font-family: 'VT323', monospace;
   text-transform: none;
 }
 

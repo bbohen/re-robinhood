@@ -1,16 +1,18 @@
 let component = ReasonReact.statelessComponent("Quotes");
 
-let make = (~quotes, ~removeQuote, _children) => {
+let make = (~quotes, ~loadHistoricalData, ~removeQuote, _children) => {
   ...component,
   render: (_self) => {
-    let index = 0;
+    let index = ref(0);
     let quoteItems =
       Array.map(
         (quote) => {
-          let key = quote##symbol ++ "-" ++ string_of_int(index);
+          let key = quote##symbol ++ "-" ++ string_of_int(index^);
           let onRemoveClick = (_event) => removeQuote(quote##symbol);
-          index + 1 |> ignore;
-          <Quote key quote onRemoveClick />
+          let graphPayload = {"symbol": quote##symbol, "index": index^};
+          let loadGraphData = () => loadHistoricalData(graphPayload);
+          index := index^ + 1;
+          <Quote key quote loadGraphData onRemoveClick />
         },
         quotes
       );

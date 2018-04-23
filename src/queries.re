@@ -18,3 +18,15 @@ let quotes =
       }
     |}
   );
+
+let historicalData =
+  gql(
+    {|
+        query history($symbol: String) {
+          history(symbol: $symbol) {
+            begins_at
+            close_price
+          }
+        }
+      |}
+  );

@@ -21,6 +21,6 @@
       "subdirs": ["apollo", "components"]
     }
   ],
-  "namespace": true,
+  // "namespace": true,
   "suffix": ".bs.js"
 }

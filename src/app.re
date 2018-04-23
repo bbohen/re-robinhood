@@ -47,7 +47,11 @@ let make = (_children) => {
           />
         </form>
       </div>
-      <Quotes removeQuote=(reduce(removeQuote)) quotes=state.quotes />
+      <Quotes
+        loadHistoricalData=(reduce(loadHistoricalData))
+        removeQuote=(reduce(removeQuote))
+        quotes=state.quotes
+      />
     </div>
   }
 };

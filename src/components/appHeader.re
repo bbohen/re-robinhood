@@ -5,11 +5,11 @@ let make = (~onThemeToggle, ~isDarkTheme, _children) => {
   render: (_self) => {
     let seperatorContent = isDarkTheme ? "[  >]" : "[<  ]";
     <div className="app-header no-select">
-      <span id="app-title"> (ReasonReact.stringToElement("re-robinhood")) </span>
+      <span id="app-title"> (ReasonReact.string("re-robinhood")) </span>
       <span onClick=onThemeToggle>
-        <span> (ReasonReact.stringToElement("Light ")) </span>
-        <span> (ReasonReact.stringToElement(seperatorContent)) </span>
-        <span> (ReasonReact.stringToElement(" Dark")) </span>
+        <span> (ReasonReact.string("Light ")) </span>
+        <span> (ReasonReact.string(seperatorContent)) </span>
+        <span> (ReasonReact.string(" Dark")) </span>
       </span>
     </div>
   }

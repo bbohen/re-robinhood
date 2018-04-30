@@ -4,7 +4,7 @@ let make = (~quote, ~loadGraphData, ~onRemoveClick, _children) => {
   ...component,
   didMount: (_self) => {
     loadGraphData();
-    ReasonReact.NoUpdate
+    ()
   },
   render: (_self) => {
     let stockHadPositiveDelta = quote##trade_price_delta > 0;
@@ -17,15 +17,15 @@ let make = (~quote, ~loadGraphData, ~onRemoveClick, _children) => {
     <div className=quoteCssClass>
       <div className="quote-header">
         <div>
-          <div className="quote-symbol"> (ReasonReact.stringToElement(quote##symbol)) </div>
-          <div className="quote-name"> (ReasonReact.stringToElement(quote##simple_name)) </div>
+          <div className="quote-symbol"> (ReasonReact.string(quote##symbol)) </div>
+          <div className="quote-name"> (ReasonReact.string(quote##simple_name)) </div>
         </div>
         <div>
           <div className="quote-last-trade-price trend-color">
-            (ReasonReact.stringToElement("$" ++ quote##last_trade_price))
+            (ReasonReact.string("$" ++ quote##last_trade_price))
           </div>
           <div className="quote-formatted-delta trend-color">
-            (ReasonReact.stringToElement(formattedDelta))
+            (ReasonReact.string(formattedDelta))
           </div>
         </div>
       </div>
@@ -34,25 +34,23 @@ let make = (~quote, ~loadGraphData, ~onRemoveClick, _children) => {
       </div>
       <div className="quote-body">
         <div>
-          <span> (ReasonReact.stringToElement("Asking Price: ")) </span>
-          <span> (ReasonReact.stringToElement(quote##ask_price)) </span>
+          <span> (ReasonReact.string("Asking Price: ")) </span>
+          <span> (ReasonReact.string(quote##ask_price)) </span>
         </div>
         <div>
-          <span> (ReasonReact.stringToElement("52 Week Low: ")) </span>
-          <span> (ReasonReact.stringToElement(quote##low_52_weeks)) </span>
+          <span> (ReasonReact.string("52 Week Low: ")) </span>
+          <span> (ReasonReact.string(quote##low_52_weeks)) </span>
         </div>
         <div>
-          <span> (ReasonReact.stringToElement("52 Week High: ")) </span>
-          <span> (ReasonReact.stringToElement(quote##high_52_weeks)) </span>
+          <span> (ReasonReact.string("52 Week High: ")) </span>
+          <span> (ReasonReact.string(quote##high_52_weeks)) </span>
         </div>
         <div>
-          <span> (ReasonReact.stringToElement("Last Updated: ")) </span>
-          <span> (ReasonReact.stringToElement(quote##hours_since_update ++ " hours ago")) </span>
+          <span> (ReasonReact.string("Last Updated: ")) </span>
+          <span> (ReasonReact.string(quote##hours_since_update ++ " hours ago")) </span>
         </div>
       </div>
-      <div onClick=onRemoveClick className="quote-footer">
-        (ReasonReact.stringToElement("Remove"))
-      </div>
+      <div onClick=onRemoveClick className="quote-footer"> (ReasonReact.string("Remove")) </div>
     </div>
   }
 };

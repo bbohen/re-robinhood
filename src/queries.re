@@ -16,7 +16,7 @@ let quotes =
           hours_since_update
         }
       }
-    |}
+    |},
   );
 
 let historicalData =
@@ -28,5 +28,5 @@ let historicalData =
             close_price
           }
         }
-      |}
+      |},
   );

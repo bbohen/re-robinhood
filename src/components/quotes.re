@@ -16,6 +16,6 @@ let make = (~quotes, ~loadHistoricalData, ~removeQuote, _children) => {
         },
         quotes
       );
-    <div className="quotes-container"> (ReasonReact.arrayToElement(quoteItems)) </div>
+    <div className="quotes-container"> (ReasonReact.array(quoteItems)) </div>
   }
 };

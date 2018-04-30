@@ -6,7 +6,7 @@ let component = ReasonReact.statelessComponent("PixelChart");
 
 let make = (~chartId: string, ~values, _children) => {
   ...component,
-  didUpdate: (_self) => {
+  didUpdate: _self => {
     /* TODO: This is bad, but the usage of raw doesnt work without the log :| */
     Js.log(pixelCharts);
     let hackyWrapper = [%raw
@@ -16,7 +16,7 @@ let make = (~chartId: string, ~values, _children) => {
         }
       |}
     ];
-    hackyWrapper(values, chartId)
+    hackyWrapper(values, chartId);
   },
-  render: (_self) => <div id=chartId className="pixel-chart line-chart" />
+  render: _self => <div id=chartId className="pixel-chart line-chart" />,
 };

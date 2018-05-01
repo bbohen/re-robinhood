@@ -1,7 +1,5 @@
 open Types;
 
-type graphPayload = {. "symbol": string, "index": int};
-
 type t =
   | AddSymbol
   | AddSymbolSuccess(quote)

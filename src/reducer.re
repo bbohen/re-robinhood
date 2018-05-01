@@ -7,7 +7,7 @@ open Actions;
 type state = {
   darkTheme: bool,
   quotes: array(quote),
-  symbols: array(symbol),
+  symbols: array(string),
   symbolInput: string,
 };
 

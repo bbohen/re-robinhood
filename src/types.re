@@ -1,7 +1,5 @@
 type data;
 
-type symbol = string;
-
 type quote = {
   .
   "ask_price": string,
@@ -36,6 +34,19 @@ type possibleQuote =
       "hours_since_update": string,
     },
   );
+
+type graphPayload = {. "symbol": string, "index": int};
+
+type actions =
+  | AddSymbol
+  | AddSymbolSuccess(quote)
+  | LoadHistoricalDataForQuote(graphPayload)
+  | LoadHistoricalDataForQuoteSuccess(quote, int)
+  | LoadInitialQuotesSuccess(payload)
+  | RemoveSymbol(string)
+  | RemoveSymbolSuccess(array(string), payload)
+  | ToggleTheme
+  | UpdateSymbolInput(string);
 
 type gql = string => unit;
 

@@ -168,6 +168,7 @@ input:focus {
   color: var(--subtext-color);
   cursor: pointer;
   display: flex;
+  padding: 10px;
   justify-content: center;
   flex-direction: column;
   text-align: center;
